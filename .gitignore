@@ -1,2 +1,4 @@
-/venv
 # Created by .ignore support plugin (hsz.mobi)
+/flasky-dev.sqlite
+/flasky-test.sqlite
+/venv
