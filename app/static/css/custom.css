@@ -1,0 +1,73 @@
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 0;
+}
+.navbar-custom {
+    background-color: #28a4c9;
+}
+.navbar-custom .navbar-header .navbar-brand {
+    color: #ffffff;
+}
+.navbar-custom .navbar-header .navbar-brand:hover,
+.navbar-custom .navbar-header .navbar-brand:focus {
+    background-color: #66afe9;
+    text-decoration: underline;
+}
+.navbar-custom .navbar-nav> li > a {
+ color: #ffffff;
+}
+.navbar-custom .navbar-nav> li >a:hover,
+.navbar-custom .navbar-nav> li >a:focus {
+ color: #3A7734;
+ background-color: #66afe9;
+}
+.navbar-custom .navbar-nav> .active > a,
+.navbar-custom .navbar-nav> .active >a:hover,
+.navbar-custom .navbar-nav> .active >a:focus {
+ color: #555;
+ background-color: #e7e7e7;
+}
+.navbar-custom .navbar-nav> .disabled > a,
+.navbar-custom .navbar-nav> .disabled >a:hover,
+.navbar-custom .navbar-nav> .disabled >a:focus {
+ color: #ccc;
+ background-color: transparent;
+}
+
+/*响应式导航栏展开按钮设置*/
+.navbar .navbar-header button.navbar-toggle {
+    border: 1px solid #eeeeee;
+    padding: 10px;
+}
+.navbar .navbar-header button.navbar-toggle span.icon-bar {
+    border-radius: 1px;
+    display: block;
+    height: 2px;
+    width: 22px;
+    background-color: #dddddd;
+    padding: 0;
+}
+.collapse .nav .dropdown ul {
+    background-color: #28a4c9;
+}
+
+p.inform {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

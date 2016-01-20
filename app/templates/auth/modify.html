@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Rcosπ - Modify{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Modify Password</h1>
+    <p class="inform">
+        Forget the password?
+        <a href="#">
+            Click here to find it back.
+        </a>
+    </p>
+</div>
+<div class="col-md-4 col-md-offset-1">
+    {{ wtf.quick_form(form) }}
+</div>
+
+{% endblock %}

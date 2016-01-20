@@ -1,0 +1,38 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+
+<hr/>
+
+<h4>Dear {{ user.username }},</h4>
+
+<div style="margin-left: 40px">
+
+    Welcome to <em>Rcosπ!</em>
+    <br/>
+    <br/>
+
+    To confirm your account please click on the following link:
+    <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">
+        The Confirm Link!
+    </a>
+    <br/>
+    <br/>
+
+    Need another confirmation email?
+    <a href="{{ url_for('auth.send_confirmation', _external=True) }}">
+        click here!
+    </a>
+
+</div>
+<br/>
+
+<div align="center">Sincerely,</div>
+<div align="center">The Rcosπ Team</div>
+
+<hr/>
+
+<div align="right"><i>Note: replies to this email address are not monitored.</i></div>
+<br/>
+
+{% endblock %}
