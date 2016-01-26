@@ -57,7 +57,22 @@
 p.inform {
 }
 
+.form-input {
+    width: 90%;
+    height: 35px;
+    font-size: 16px;
+    padding: 6px 10px 6px 10px;
+    border: solid 1px #cccccc;
+    border-radius: 4px;
+}
 
+.chkBox {
+    vertical-align: -3px;
+}
+
+.btn-submit {
+    width: 90%;
+}
 
 
 

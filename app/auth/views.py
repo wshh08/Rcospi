@@ -1,12 +1,27 @@
 # _*_ coding:utf-8 _*_
 
-from flask import render_template, session, redirect, request, url_for, flash
+from flask import render_template, session, redirect, request, url_for, flash, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
 from .forms import LoginForm, RegistrationForm, ModifyPasswordForm, ChangeEmailForm
 from ..models import User
 from ..email import send_email
+import json
+import rsa
+
+
+@auth.route('/ajax/login', methods=['POST'])
+def login_ajax():
+    js = json.dumps(request.get_json())
+    js = json.loads(js)
+    # email = js.get('email')
+    # password = js.get('password')
+    rejson = {'email': js.get('email'),
+              'password': js.get('password')}
+    resopnse = jsonify(rejson)
+    resopnse.set_cookie('username', js.get('email'))
+    return resopnse
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -18,7 +33,7 @@ def login():
             login_user(user, form.remember_me.data)
             return redirect(request.args.get('next') or url_for('main.index'))
         flash(u'用户名或密码错误')
-    return render_template('auth/login.html', form=form)
+    return render_template('auth/login.html', form=form, form_login=form)
 
 
 @auth.route('/logout')
@@ -100,8 +115,9 @@ def change_email():
 
 @auth.route('/reset-password', methods=['GET', 'POST'])
 def reset_password():
-    send_email(current_user.email, 'Reset Your Password',
-               'auth/email/reset', user=current_user, token=token)
+    pass
+    # send_email(current_user.email, 'Reset Your Password',
+    #            'auth/email/reset', user=current_user, token=token)
 
 
 

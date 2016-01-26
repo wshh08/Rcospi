@@ -1,4 +1,5 @@
 {% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}Rcosπ{% endblock %}
 
@@ -42,10 +43,15 @@
             </li>
             {% else %}
             <li>
-                <a href="{{ url_for('auth.login') }}">Log In</a>
+                <!--<a href="{{ url_for('auth.login') }}">Log In</a>-->
+                <a data-toggle="modal" id='nav-login' href="#modal-login">Log In</a>
+                <!--<button class="btn btn-primary bt-lg" data-toggle="modal" data-target="#myModal">-->
+                    <!--Log In-->
+                <!--</button>-->
             </li>
             <li>
-                <a href="{{ url_for('auth.register') }}">Register</a>
+                <!--<a href="{{ url_for('auth.register') }}">Register</a>-->
+                <a data-toggle="modal" id="nav-register" href="#modal-login">Register</a>
             </li>
             {% endif %}
         </ul>
@@ -62,12 +68,70 @@
     </div>
     {% endfor %}
 
+    {% if not current_user.is_authenticated %}
+    <!-- 模态框（modal） -->
+    <div class="modal fade" id="modal-login" tabindex="-1" role="dialog"
+        aria-labelledby="mymodallabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--<div class="modal-header">-->
+                    <!--<h4 class="modal-title" id="mymodallabel">-->
+                    <!--Log In-->
+                    <!--</h4>-->
+                <!--</div>-->
+
+                <div class="modal-body">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <ul id="modaltabs", class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-login" data-toggle="tab">Log In</a>
+                        </li>
+                        <li>
+                            <a href="#tab-register" data-toggle="tab">Register</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="tab-login" class="tab-pane fade in active">
+                            <!--{{ wtf.quick_form(form_login) }}-->
+                            <form action="" method="post" name="login">
+                                {{ form_login.hidden_tag() }}
+                                <p style="margin-top: 10px; margin-bottom: 0">{{ form_login.email.label }}</p>
+                                <p style="margin-top: 0">{{ form_login.email(class='form-input') }}</p>
+                                <p style="margin-top: 10px; margin-bottom: 0">{{ form_login.password.label }}</p>
+                                <p style="margin-top: 0">{{ form_login.password(class='form-input') }}</p>
+                                <p>{{form_login.remember_me(class="chkBox")}} Remember Me</p>
+                                <p><input type="button" id="button-login" class="btn btn-primary btn-submit" value="Log In"></p>
+                                <!--<p><button class="btn btn-primary btn-submit">SIGN IN</button></p>-->
+                            </form>
+                        </div>
+                        <div id="tab-register" class="tab-pane fade">
+                            <div>Register Form Here</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                    <!--<button type="button" class="btn btn-primary">提交更改</button>-->
+                <!--</div>-->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    {% endif %}
+
     {% block page_content %}{% endblock %}
 </div>
+
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 <script defer src="../static/js/moment-with-locales.js"></script>
 <script defer src="../static/js/custom.js"></script>
+    {% if not current_user.is_authenticated %}
+    <script defer src="../static/js/login_ajax.js"></script>
+    {% endif %}
 {% endblock %}
