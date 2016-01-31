@@ -1,39 +1,30 @@
 # _*_ coding:utf-8 _*_
 
-from flask import render_template, session, redirect, request, url_for, flash, jsonify
+from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
 from .forms import LoginForm, RegistrationForm, ModifyPasswordForm, ChangeEmailForm
 from ..models import User
 from ..email import send_email
-import json
-import rsa
-
-
-@auth.route('/ajax/login', methods=['POST'])
-def login_ajax():
-    js = json.dumps(request.get_json())
-    js = json.loads(js)
-    # email = js.get('email')
-    # password = js.get('password')
-    rejson = {'email': js.get('email'),
-              'password': js.get('password')}
-    resopnse = jsonify(rejson)
-    resopnse.set_cookie('username', js.get('email'))
-    return resopnse
+import bcrypt
+# import json
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    # form_login = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('main.index'))
+        if user is not None:
+            password_hash = user.password_hash.encode("utf-8")
+            print password_hash
+            if bcrypt.hashpw(form.password.data.encode("utf-8"), password_hash) == password_hash:
+                login_user(user, form.remember_me.data)
+                return redirect(request.args.get('next') or url_for('main.index'))
         flash(u'用户名或密码错误')
-    return render_template('auth/login.html', form=form, form_login=form)
+    return render_template('auth/login.html', form=form)
 
 
 @auth.route('/logout')
@@ -47,10 +38,12 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    # form_login = LoginForm()
     if form.validate_on_submit():
+        password_hash = bcrypt.hashpw(form.password.data.encode("utf-8"), bcrypt.gensalt(10))
         user = User(email=form.email.data,
                     username=form.username.data,
-                    password=form.password.data)
+                    password_hash=password_hash)
         db.session.add(user)
         db.session.commit()  # 提前提交数据库产生id用于计算token.
         login_user(user, False)

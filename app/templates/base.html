@@ -12,7 +12,7 @@
 {% block navbar %}
 <nav class="navbar navbar-custom" role="navigation">
     <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url_for('main.index') }}">Rcosπ</a>
+        <a class="navbar-brand" id="nav-brand" href="{{ url_for('main.index') }}">Rcosπ</a>
         <button type="button" class="navbar-toggle"
                 data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">切换导航</span>
@@ -23,31 +23,27 @@
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('main.index') }}">Home</a></li>
+            <li><a id="nav-home" href="{{ url_for('main.index') }}">Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <!--current_user由flask-login定义，在视图函数和模板中自动可用-->
             {% if current_user.is_authenticated %}
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <li class="dropdown-custom collapse">
+                <button class="dropbtn-custom">
                     {{ current_user.username }} <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
+                </button>
+                <div class="dropcontent-custom">
                     {% if not current_user.confirmed %}
-                    <li><a href="{{ url_for('auth.send_confirmation') }}">Send Confirm Email</a></li>
+                    <a href="{{ url_for('auth.send_confirmation') }}">Send Confirm Email</a>
                     {% endif %}
-                    <li><a href="{{ url_for('auth.modify_password') }}">Modify Password</a></li>
-                    <li><a href="{{ url_for('auth.change_email') }}">Change Email</a></li>
-                    <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
-                </ul>
+                    <a href="{{ url_for('auth.modify_password') }}">Modify Password</a>
+                    <a href="{{ url_for('auth.change_email') }}">Change Email</a>
+                    <a href="{{ url_for('auth.logout') }}">Log Out</a>
+                </div>
             </li>
             {% else %}
             <li>
-                <!--<a href="{{ url_for('auth.login') }}">Log In</a>-->
                 <a data-toggle="modal" id='nav-login' href="#modal-login">Log In</a>
-                <!--<button class="btn btn-primary bt-lg" data-toggle="modal" data-target="#myModal">-->
-                    <!--Log In-->
-                <!--</button>-->
             </li>
             <li>
                 <!--<a href="{{ url_for('auth.register') }}">Register</a>-->
@@ -95,20 +91,25 @@
 
                     <div class="tab-content">
                         <div id="tab-login" class="tab-pane fade in active">
-                            <!--{{ wtf.quick_form(form_login) }}-->
                             <form action="" method="post" name="login">
-                                {{ form_login.hidden_tag() }}
-                                <p style="margin-top: 10px; margin-bottom: 0">{{ form_login.email.label }}</p>
-                                <p style="margin-top: 0">{{ form_login.email(class='form-input') }}</p>
-                                <p style="margin-top: 10px; margin-bottom: 0">{{ form_login.password.label }}</p>
-                                <p style="margin-top: 0">{{ form_login.password(class='form-input') }}</p>
-                                <p>{{form_login.remember_me(class="chkBox")}} Remember Me</p>
+                                <p style="margin-top: 10px; margin-bottom: 4px"><b>Email:</b></p>
+                                <p style="margin-top: 0"><input type="email" class="form-input" id="email-login" title="email-login"/></p>
+                                <p style="margin-top: 10px; margin-bottom: 4px"><b>Password:</b></p>
+                                <p style="margin-top: 0"><input type="password" class="form-input" id="password-login" title="password-login" /></p>
+                                <p><input type="checkbox" id="remember-login" class="chkBox" checked="checked">Remember Me</p>
                                 <p><input type="button" id="button-login" class="btn btn-primary btn-submit" value="Log In"></p>
-                                <!--<p><button class="btn btn-primary btn-submit">SIGN IN</button></p>-->
                             </form>
                         </div>
                         <div id="tab-register" class="tab-pane fade">
-                            <div>Register Form Here</div>
+                            <form action="" method="post" name="login">
+                                <p style="margin-top: 10px; margin-bottom: 4px"><b>Email:</b></p>
+                                <p style="margin-top: 0"><input type="email" class="form-input" id="email-register" title="email-login"/></p>
+                                <p style="margin-top: 10px; margin-bottom: 4px"><b>Password:</b></p>
+                                <p style="margin-top: 0"><input type="password" class="form-input" id="password-register" title="password-login" /></p>
+                                <p style="margin-top: 10px; margin-bottom: 4px"><b>Confirm Your Password:</b></p>
+                                <p style="margin-top: 0"><input type="text" class="form-input" id="password-confirm" title="password-login" disabled/></p>
+                                <p><input type="button" id="button-register" class="btn btn-primary btn-submit" value="Register"></p>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -131,6 +132,7 @@
 {{ super() }}
 <script defer src="../static/js/moment-with-locales.js"></script>
 <script defer src="../static/js/custom.js"></script>
+<script defer src="../static/js/bcrypt.min.js"></script>
     {% if not current_user.is_authenticated %}
     <script defer src="../static/js/login_ajax.js"></script>
     {% endif %}

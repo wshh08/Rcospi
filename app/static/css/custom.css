@@ -54,16 +54,34 @@
     background-color: #28a4c9;
 }
 
+#nav-login,
+#nav-register,
+#nav-home,
+#nav-brand {
+    border-radius: 5px;
+}
+
 p.inform {
+}
+.tab-content div {
 }
 
 .form-input {
-    width: 90%;
+    width: 94%;
     height: 35px;
     font-size: 16px;
+    letter-spacing: 1px;
     padding: 6px 10px 6px 10px;
     border: solid 1px #cccccc;
     border-radius: 4px;
+}
+
+#password-confirm {
+    font-size: x-large;
+    color: #269abc;
+    padding: 1px 1px 1px 10px;
+    text-align: center;
+    letter-spacing: 9px;
 }
 
 .chkBox {
@@ -74,13 +92,48 @@ p.inform {
     width: 90%;
 }
 
+/*The hoverable dropdown part in navbar*/
+.dropdown-custom {
+    position: relative;
+    display: inline-block;
+}
 
+.dropbtn-custom {
+    background-color: #28a4c9;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    min-width: 150px;
+}
 
+.dropcontent-custom {
+    display: none;
+    position: absolute;
+    background-color: #28a4c9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 
+.dropcontent-custom a {
+    color: #3A7734;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
+.dropcontent-custom a:hover {
+    background-color: #f1f1f1;
+}
 
+.dropdown-custom:hover .dropcontent-custom {
+    display: block;
+}
 
-
+.dropdown-custom:hover .dropbtn-custom {
+    background-color: #66afe9;
+}
 
 
 

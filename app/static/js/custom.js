@@ -20,9 +20,16 @@ $("#form-login").find(".form").append('<span style="margin-left: 20px">Forget pa
 
 $('#nav-login').click(function() {
     $('#modaltabs').find('li:eq(0)').find('a').tab('show');
+    $('#password-confirm').val($("#password-register").val());
 });
 $('#nav-register').click(function() {
     $('#modaltabs').find('li:eq(1)').find('a').tab('show');
+    $('#password-confirm').val($("#password-register").val());
+});
+$('#password-register').keyup(function () {
+    $('#password-confirm').val($("#password-register").val());
+}).bind('input propertychange', function () {
+    $('#password-confirm').val($("#password-register").val());
 });
 
 function refresh() {
@@ -31,4 +38,5 @@ function refresh() {
     var current = now.format('MMM Do YYYY, HH:mm:ss');
     $(".moment_current").replaceWith('<span class="moment_current">'+current+'</span>');
 }
+refresh();
 setInterval("refresh()", 1000);

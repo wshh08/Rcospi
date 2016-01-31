@@ -34,10 +34,13 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
+    from .ajax import ajax as ajax_blueprint
+    app.register_blueprint(ajax_blueprint, url_prefix='/ajax')
+
     return app
 
-print "Test Import"
-print "Test Again"
+# print "Test Import"
+# print "Test Again"
 
 
 

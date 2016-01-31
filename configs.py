@@ -27,7 +27,7 @@ class Config:
         app.extensions['bootstrap']['cdns']['bootstrap'] = cdn_conditional
 
         # jQuery
-        cdn_base_url = WebCDN('http://cdn.bootcss.com/jquery/2.1.3/')
+        cdn_base_url = WebCDN('//cdn.bootcss.com/jquery/2.1.3/')
         cdn_conditional = ConditionalCDN('BOOTSTRAP_SERVE_LOCAL', local, cdn_base_url)
         app.extensions['bootstrap']['cdns']['jquery'] = cdn_conditional
 

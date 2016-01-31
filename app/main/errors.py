@@ -1,12 +1,15 @@
 from flask import render_template
+from forms import LoginForm
 from . import main
 
 
 @main.app_errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    form_login = LoginForm()
+    return render_template('404.html', form_login=form_login), 404
 
 
 @main.app_errorhandler(500)
 def internal_server_error(e):
-    return render_template('500.html'), 500
+    form_login = LoginForm()
+    return render_template('500.html', form_login=form_login), 500
